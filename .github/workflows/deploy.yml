@@ -1,0 +1,24 @@
+name: Deploy to VM via SSH
+
+# Запускать при пуше в ветку github-actions
+on:
+  push:
+    branches:
+      - github-actions
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@master
+        with:
+          # Ваши переменные, которые были настроены ранее:
+          host: course.prafdin.ru
+          username: shikunov
+          port: 2437
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          # Команда для выполнения на удаленной машине (ВМ)
+          script: |
+            /home/vboxuser/Desktop/webhook-deployer/deploy.sh
