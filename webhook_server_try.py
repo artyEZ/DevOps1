@@ -4,7 +4,7 @@ import os
 import subprocess
 import json
 
-REPO_URL = "https://github.com/YOUR_USERNAME/YOUR_REPO.git"
+REPO_URL = "https://github.com/artyEZ/DevOps1"
 APP_DIR = "/home/vboxuser/app"
 APP_SERVICE = "app.service"
 HOST = "0.0.0.0"
