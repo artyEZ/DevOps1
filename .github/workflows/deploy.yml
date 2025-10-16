@@ -1,21 +1,27 @@
-name: Deploy to VM via SSH
+name: CD – Deploy to VM via SSH
 
 on:
-  push:
-    branches:
-      - github-actions
+  release:
+    types: [published]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to VM
-        uses: appleboy/ssh-action@master
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to VM and restart service
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: course.prafdin.ru
           username: shikunov
           port: 2437
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-          script: |
+          script:
             /home/vboxuser/Desktop/webhook-deployer/deploy.sh
